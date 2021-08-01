@@ -27,16 +27,18 @@ const getProducts = async (): Promise<CartItemType[]> => {
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([] as Array<CartItemType>);
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const { data, isLoading, error } = useQuery("products", getProducts);
 
-  const getTotalItems = (items: CartItemType[]) =>
-    items.reduce((ack: number, item) => ack + item.amount, 0);
+  const getTotalItems = (items: CartItemType[]) => {
+    return items.reduce((ack: number, item) => {
+      return ack + item.amount;
+    }, 0);
+  };
 
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.id === clickedItem.id);
-
       if (isItemInCart) {
         return prev.map((item) =>
           item.id === clickedItem.id
@@ -44,7 +46,6 @@ const App = () => {
             : item
         );
       }
-
       return [...prev, { ...clickedItem, amount: 1 }];
     });
   };

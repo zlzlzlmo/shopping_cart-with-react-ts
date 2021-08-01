@@ -14,8 +14,8 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
     items.reduce((ack: number, item) => ack + item.amount * item.price, 0);
   return (
     <Wrapper>
-      <h2>Your Shopping Cart</h2>
-      {cartItems.length === 0 ? <p>No items in cart</p> : null}
+      <h2>장바구니</h2>
+      {cartItems.length === 0 ? <p>현재 등록된 상품이 없습니다.</p> : null}
       {cartItems.map((item) => (
         <CartItem
           key={item.id}
@@ -24,7 +24,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
           removeFromCart={removeFromCart}
         />
       ))}
-      <h2>Total : ${calculateTotal(cartItems).toFixed(2)}</h2>
+      <h2>총 가격 : ${calculateTotal(cartItems).toFixed(2)}</h2>
     </Wrapper>
   );
 };
