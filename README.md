@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# 장바구니 기능 구현
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[프로젝트 보러가기! 👍](https://pushapp-741a1.web.app)
 
-## Available Scripts
+## 사용언어는 ?
 
-In the project directory, you can run:
+> React, TypeScript
 
-### `yarn start`
+## 사용 패키지 || 라이브러리는 ?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> Fakestore Api, material-ui, styled-components, redux-toolkit, react-query
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 👀 어떤 모습으로 개발이 되었나?
 
-### `yarn test`
+|                   | 구현된 이미지                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| 인덱스            | ![](https://images.velog.io/images/hoon_dev/post/1c4478da-d5b4-4198-bdf1-1d962d547f93/image.png) |
+| 비어있는 장바구니 | ![](https://images.velog.io/images/hoon_dev/post/f37fb910-f573-4765-a6bf-7d59f2fda0f0/image.png) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+|
+|장바구니 추가|![](https://images.velog.io/images/hoon_dev/post/bfd62775-874d-453a-b69d-719198abd32c/image.png)|
 
-### `yarn build`
+## 🕹 기능정보
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. FakeStore API 에서 상품 받아오기
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- react query를 사용하여 data 담기
 
-### `yarn eject`
+```ts
+export type CartItemType = {
+  id: number;
+  category: string;
+  description: string;
+  image: string;
+  price: number;
+  title: string;
+  amount: number;
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const getProducts = async (): Promise<CartItemType[]> => {
+  return await (await fetch("https://fakestoreapi.com/products")).json();
+};
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+//react query 사용
+const { data, isLoading, error } = useQuery("products", getProducts);
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 2. 장바구니에 담기
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- 해당 상품이 장바구니에 안담겨있으면 새로운 객체 데이터로 담고, 담겨있다면 amount를 1추가하여 장바구니에 담겨있는 상품 갯수만 늘리기
 
-## Learn More
+```ts
+const handleAddToCart = (clickedItem: CartItemType) => {
+  setCartItems((prev) => {
+    const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+    if (isItemInCart) {
+      return prev.map((item) =>
+        item.id === clickedItem.id ? { ...item, amount: item.amount + 1 } : item
+      );
+    }
+    return [...prev, { ...clickedItem, amount: 1 }];
+  });
+};
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. 장바구니에서 상품 빼기
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 제거하려는 상품이 갯수가 1이라면 상태값을 빈배열로 아예 비워버리고, 2개 이상이라면 갯수 감소 시키기
+
+```ts
+const handleRemoveFromCart = (id: number) => {
+  setCartItems((prev) =>
+    prev.reduce((ack, item) => {
+      if (item.id === id) {
+        if (item.amount === 1) return ack;
+        return [...ack, { ...item, amount: item.amount - 1 }];
+      } else {
+        return [];
+      }
+    }, [] as CartItemType[])
+  );
+};
+```
+
+---
+
+😎 감사합니다 :)

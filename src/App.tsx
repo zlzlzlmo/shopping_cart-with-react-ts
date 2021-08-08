@@ -49,6 +49,7 @@ const App = () => {
       return [...prev, { ...clickedItem, amount: 1 }];
     });
   };
+
   const handleRemoveFromCart = (id: number) => {
     setCartItems((prev) =>
       prev.reduce((ack, item) => {
@@ -56,7 +57,7 @@ const App = () => {
           if (item.amount === 1) return ack;
           return [...ack, { ...item, amount: item.amount - 1 }];
         } else {
-          return [...ack, item];
+          return [];
         }
       }, [] as CartItemType[])
     );
