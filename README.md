@@ -12,11 +12,17 @@
 
 ## 👀 어떤 모습으로 개발이 되었나?
 
-|                   | 구현된 이미지                                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------------------ | --- |
-| 인덱스            | ![](https://images.velog.io/images/hoon_dev/post/1c4478da-d5b4-4198-bdf1-1d962d547f93/image.png) |
-| 비어있는 장바구니 | ![](https://images.velog.io/images/hoon_dev/post/f37fb910-f573-4765-a6bf-7d59f2fda0f0/image.png) |     |
-| 장바구니 추가     | ![](https://images.velog.io/images/hoon_dev/post/bfd62775-874d-453a-b69d-719198abd32c/image.png) |
+### > 인덱스
+
+![](https://images.velog.io/images/hoon_dev/post/1c4478da-d5b4-4198-bdf1-1d962d547f93/image.png)
+
+### > 비어있는 장바구니
+
+![](https://images.velog.io/images/hoon_dev/post/f37fb910-f573-4765-a6bf-7d59f2fda0f0/image.png)
+
+### > 장바구니 추가
+
+![](https://images.velog.io/images/hoon_dev/post/bfd62775-874d-453a-b69d-719198abd32c/image.png)
 
 ## 🕹 기능정보
 
